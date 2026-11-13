@@ -150,14 +150,16 @@
       const q = document.getElementById('busquedaInput').value;
       if (!q) return;
       
-      let videoId = q;
-      if (q.includes('youtube.com') || q.includes('youtu.be')) {
-        const urlParams = new URLSearchParams(new URL(q).search);
-        videoId = urlParams.get('v') || q.split('/').pop();
-      } else {
-        alert("Pegá un link válido de YouTube de la canción que quieras agregar 🎵");
-        return;
-      }
+      let videoId = null;
+    const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/;
+    const match = q.match(regExp);
+    
+    if (match && match[1]) {
+      videoId = match[1];
+    } else {
+      alert("Pegá un link válido de YouTube de la canción que quieras agregar ♫");
+      return;
+    }
 
       let user = document.getElementById('nombreUsuario').value || 'Anónimo';
 
